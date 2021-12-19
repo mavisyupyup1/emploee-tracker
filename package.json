@@ -1,0 +1,26 @@
+{
+  "name": "employee-tracker",
+  "version": "1.0.0",
+  "description": "Employee Tracker is a content management systems (CMS) that allow business owners to easily view and interact with information about departments, roles and employees in the company. This command-line application powered by Node.js, Inquirer and MySQL.",
+  "main": "server.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mavisyupyup1/employee-tracker.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mavisyupyup1/employee-tracker/issues"
+  },
+  "homepage": "https://github.com/mavisyupyup1/employee-tracker#readme",
+  "dependencies": {
+    "dotenv": "^10.0.0"
+  }
+}
