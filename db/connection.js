@@ -1,5 +1,5 @@
 require('dotenv').config()
-console.log(process.env)
+//console.log(process.env)
 //import mysql2 package
 const mysql=require('mysql2')
 
