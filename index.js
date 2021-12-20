@@ -58,3 +58,34 @@ function viewDepartment(){
     })
     .then(()=>{loadMainPrompts()})
 }
+function viewRole(){
+    db.viewAllRole()
+    .then(([rows])=>{
+        let roles =rows;
+        console.log('\n');
+        console.table(roles);
+    })
+    .then(()=>{loadMainPrompts()})
+}
+function viewEmployee(){
+    db.viewAllEmployee()
+    .then(([rows])=>{
+        let employees = rows;
+        console.log('\n');
+        console.table(employees);
+    })
+    .then(()=>{
+        loadMainPrompts()
+    })
+}
+function viewEmployeeByDepartment(){
+db.viewAllEmployeeByDepartment()
+.then(([rows])=>{
+    let employees = rows;
+    console.log('\n')
+    console.table(employees)
+})
+}
+function viewEmployeeByRole(){
+
+}
