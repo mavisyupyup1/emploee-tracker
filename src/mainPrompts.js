@@ -17,6 +17,10 @@ module.exports=[
             value:'VIEW_EMPLOYEE'
             },
             {
+                name:'View utilized budget by department',
+                value:"VIEW_BUDGET_BY_DEPARTMENT"
+            },
+            {
                 name:'View employees by department',
                 value:'VIEW_EMPLOYEE_BY_DEPARTMENT'
             },
@@ -38,8 +42,25 @@ module.exports=[
             },
             {
                 name:'Update an employee role',
-                value:'UPDATE_EMPLOYEE'
+                value:'UPDATE_EMPLOYEE_ROLE'
             },
+            {
+                name:'Update an employee manager',
+                value:'UPDATE_EMPLOYEE_MANAGER'
+            },
+            {
+                name:'Delete a department',
+                value:'DELETE_DEPARTMENT'
+            },
+            {
+                name:'Delete a role',
+                value:'DELETE_ROLE'
+            },
+            {
+                name:'Delete an employee',
+                value:'DELETE_EMPLOYEE'
+            },
+
             {
                 name:'Quit',
                 value:'QUIT'

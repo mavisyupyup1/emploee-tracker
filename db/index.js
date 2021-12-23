@@ -22,10 +22,18 @@ class DB{
             `SELECT * FROM employee`
         )
     }
-    viewAllEmployeeByDepartment (){
+    viewAllEmployeeRole (roleId){
         return this.connection.promise().query(
-            `SELECT `
+            `SELECT * FROM employee WHERE role_id =?`,
+            roleId
         )
+    };
+    viewEmployeeByRole(){
+
     }
+    end(){
+        connection.end()
+    }
+
 }
 module.exports = new DB(connection);

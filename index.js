@@ -26,6 +26,9 @@ function loadMainPrompts(){
             case 'VIEW_EMPLOYEE':
                 viewEmployee();
                 break;
+            case 'VIEW_BUDGET_BY_DEPARTMENT':
+                viewBudgetByDepartment();
+                break;
             case 'VIEW_EMPLOYEE_BY_DEPARTMENT':
                 viewEmployeeByDepartment();
                 break;
@@ -41,11 +44,23 @@ function loadMainPrompts(){
             case 'ADD_EMPLOYEE':
                 addEmployee();
                 break;
-            case 'UPDATE_EMPLOYEE':
-                updateEmployee();
+            case 'UPDATE_EMPLOYEE_ROLE':
+                updateEmployeeRole();
+                break;
+            case 'UPDATE_EMPLOYEE_MANAGER':
+                updateEmployeeManager();
+                break;
+            case 'DELETE_DEPARTMENT':
+                deleteDepartment();
+                break;
+            case 'DELETE_ROLE':
+                deleteROLE();
+                break;
+            case 'DELETE_EMPLOYEE':
+                deleteEmployee();
                 break;
             case 'QUIT':
-                quit ();
+                db.end();
         }
     })
 }
@@ -54,6 +69,7 @@ function viewDepartment(){
     .then(([rows])=>{
         let departments = rows;
         console.log('\n');
+        console.log('Displaying all departments');
         console.table(departments);
     })
     .then(()=>{loadMainPrompts()})
@@ -63,6 +79,7 @@ function viewRole(){
     .then(([rows])=>{
         let roles =rows;
         console.log('\n');
+        console.log('Displaying all roles');
         console.table(roles);
     })
     .then(()=>{loadMainPrompts()})
@@ -72,6 +89,7 @@ function viewEmployee(){
     .then(([rows])=>{
         let employees = rows;
         console.log('\n');
+        console.log('Displaying all employees');
         console.table(employees);
     })
     .then(()=>{
@@ -79,6 +97,7 @@ function viewEmployee(){
     })
 }
 function viewEmployeeByDepartment(){
+    inquirer.prompt
 db.viewAllEmployeeByDepartment()
 .then(([rows])=>{
     let employees = rows;
@@ -86,6 +105,9 @@ db.viewAllEmployeeByDepartment()
     console.table(employees)
 })
 }
+
 function viewEmployeeByRole(){
 
 }
+
+   
