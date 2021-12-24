@@ -1,5 +1,7 @@
 const inquirer = require('inquirer')
 const db = require('./db')
+var figlet = require('figlet');
+var colors = require('colors');
 require('console.table')
 
 const mainPromptsQuestions = require('./src/mainPrompts')
@@ -7,7 +9,14 @@ init()
 
 //display welcome text and load main prompts
 function init(){
-    console.log('Welcome to Employee Tracker!');
+    figlet('Employee Tracker!', function(err, data) {
+        if (err) {
+            console.log('Something went wrong...');
+            console.dir(err);
+            return;
+        }
+        console.log(data)
+    });
     loadMainPrompts()
 }
 

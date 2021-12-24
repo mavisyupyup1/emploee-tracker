@@ -18,13 +18,11 @@ CREATE TABLE employee(
     last_name VARCHAR(30),
     role_id INTEGER,
     manager_id INTEGER,
-    FOREIGN KEY(role_id) REFERENCES role(id)  ON DELETE SET NULL ON UPDATE CASCADE,
-   FOREIGN KEY (manager_id) REFERENCES employee(id) 
-    ON DELETE SET NULL ON UPDATE CASCADE
+    FOREIGN KEY(role_id) REFERENCES role(id)  ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-SELECT name FROM department LEFT JOIN role ON department.id = role.department_id;
+CREATE VIEW department_role AS SELECT name FROM department LEFT JOIN role ON department.id = role.department_id;
 
-SELECT title, salary, department_id FROM role LEFT JOIN department ON department.id = role.department_id;
+CREATE VIEW department_salary AS SELECT title, salary, department_id FROM role LEFT JOIN department ON department.id = role.department_id;
 
-SELECT first_name, last_name, role_id, manager_id FROM employee JOIN role ON employee.role_id = role.id;
+CREATE VIEW employee_role AS SELECT first_name, last_name, role_id, manager_id FROM employee JOIN role ON employee.role_id = role.id;

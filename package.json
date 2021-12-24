@@ -21,7 +21,9 @@
   },
   "homepage": "https://github.com/mavisyupyup1/employee-tracker#readme",
   "dependencies": {
+    "colors": "^1.4.0",
     "console.table": "^0.10.0",
-    "dotenv": "^10.0.0"
+    "dotenv": "^10.0.0",
+    "figlet": "^1.5.2"
   }
 }

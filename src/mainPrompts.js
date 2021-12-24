@@ -2,7 +2,7 @@ module.exports=[
     {
         type:'list',
         name:'choice',
-        message:'What would you like to do?',
+        message:'What would you like to do?'.green,
         choices: [
             {
             name:'View all departments',
