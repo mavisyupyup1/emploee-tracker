@@ -1,6 +1,6 @@
 const inquirer = require('inquirer')
 const db = require('./db')
-var figlet = require('figlet');
+const figlet = require('figlet');
 figlet('Employee Tracker!', function(err, data) {
     if (err) {
         console.log('Something went wrong...');
@@ -10,7 +10,7 @@ figlet('Employee Tracker!', function(err, data) {
     console.log(data)
     init()
 });
-var colors = require('colors');
+const colors = require('colors');
 require('console.table')
 
 const mainPromptsQuestions = require('./src/mainPrompts')
@@ -91,7 +91,7 @@ function viewRole(){
         let roles =rows;
         console.log('\n');
         console.log('Displaying all roles');
-        console.table(roles.yellow);
+        console.table(roles);
     })
     .then(()=>{loadMainPrompts()})
 }
@@ -120,7 +120,7 @@ db.viewAllEmployeeByDepartment()
 function viewEmployeeByRole(){
 
 }
-  // function to Add a department
+// function to add a department
 function addDepartment(){
     inquirer.prompt([
         {
@@ -142,4 +142,102 @@ function addDepartment(){
             loadMainPrompts()
         })  
 })
+}
+
+// function to add a role
+function addRole(){
+    db.viewAllDepartment()
+    .then(([rows])=>{
+            let departments = rows;
+            const departmentChoices = departments.map(({id, name})=>({
+                name:name,
+                value:id
+            }));
+      inquirer.prompt([
+            {
+                name: "title",
+                type: "input",
+                message: "What is the title for the new role?",
+                validate: (value) => {
+                    if (value) {
+                        return true;
+                    } else {
+                        console.log("Please enter the title.");
+                    }
+                }
+            },
+            {
+                name: "salary",
+                type: "input",
+                message: "What is this new role's salary",
+                validate: (value) => {
+                    if (isNaN(value) === false) {
+                        return true;
+                    }
+                    console.log("Please enter a number");
+                }
+            },
+            {
+                name: "department",
+                type: "list",
+                choices: departmentChoices,
+                message: "What department is this new role under?",
+            }
+        ]).then(answer => {
+            
+           db.addRole(answer)
+           console.log(`New role ${answer.title} has been added!`);
+           loadMainPrompts();
+        });
+    })
+}
+
+// function to add a role
+function addEmployee(){
+    db.viewAllRole()
+    .then(([rows])=>{
+            let Roles = rows;
+            const roleChoices = Roles.map(({id, title})=>({
+                name:title,
+                value:id
+            }));
+      inquirer.prompt([
+            {
+                name: "first_name",
+                type: "input",
+                message: "What is the first name of this employee",
+                validate: (value) => {
+                    if (value) {
+                        return true;
+                    } else {
+                        console.log("Please enter first name.");
+                    }
+                }
+            },
+            {
+                name: "last_name",
+                type: "input",
+                message: "What is the last name of this employee",
+                validate: (value) => {
+                    if (value) {
+                        return true;
+                    } else {
+                        console.log("Please enter last name.");
+                    }
+                }
+            },
+
+            {
+                name: "role",
+                type: "list",
+                choices: roleChoices,
+                message: "What department is this new role under?",
+            }
+        ]).then(answer => {
+            
+           db.addEmployee(answer)
+           console.log(`New role ${answer.first_name} has been added!`.bgGreen);
+           loadMainPrompts();
+        });
+    })
 }

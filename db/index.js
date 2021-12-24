@@ -1,4 +1,5 @@
 const connection = require('./connection');
+const inquirer = require('inquirer')
 class DB{
     // keeping a reference to the connection on the class
     constructor(connection){
@@ -38,10 +39,26 @@ class DB{
                 name: answer.department
             }
         )
-        console.log(`New department ${answer.department} has been added!`);       
+            
     }
-    end(){
-        connection.end()
+    addRole(answer){
+        return this.connection.promise().query( "INSERT INTO role SET ?",
+        {
+            title: answer.title,
+            salary: answer.salary,
+            department_id: answer.department
+        }
+       )
+    }
+    addEmployee(answer){
+        return this.connection.promise().query( "INSERT INTO employee SET ?",
+        {
+            first_name: answer.first_name,
+            last_name:answer.last_name,
+            role_id: answer.role,
+            manager_id:answer.manager_id
+        }
+       )
     }
 
 }
