@@ -31,6 +31,15 @@ class DB{
     viewEmployeeByRole(){
 
     }
+    addDepartment(answer){
+        return this.connection.promise().query(
+        "INSERT INTO department SET ?",
+            {
+                name: answer.department
+            }
+        )
+        console.log(`New department ${answer.department} has been added!`);       
+    }
     end(){
         connection.end()
     }

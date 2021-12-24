@@ -1,22 +1,24 @@
 const inquirer = require('inquirer')
 const db = require('./db')
 var figlet = require('figlet');
+figlet('Employee Tracker!', function(err, data) {
+    if (err) {
+        console.log('Something went wrong...');
+        console.dir(err);
+        return;
+    }
+    console.log(data)
+    init()
+});
 var colors = require('colors');
 require('console.table')
 
 const mainPromptsQuestions = require('./src/mainPrompts')
-init()
+
 
 //display welcome text and load main prompts
 function init(){
-    figlet('Employee Tracker!', function(err, data) {
-        if (err) {
-            console.log('Something went wrong...');
-            console.dir(err);
-            return;
-        }
-        console.log(data)
-    });
+
     loadMainPrompts()
 }
 
@@ -89,7 +91,7 @@ function viewRole(){
         let roles =rows;
         console.log('\n');
         console.log('Displaying all roles');
-        console.table(roles);
+        console.table(roles.yellow);
     })
     .then(()=>{loadMainPrompts()})
 }
@@ -118,5 +120,26 @@ db.viewAllEmployeeByDepartment()
 function viewEmployeeByRole(){
 
 }
-
-   
+  // function to Add a department
+function addDepartment(){
+    inquirer.prompt([
+        {
+            name: "department",
+            type: "input",
+            message: "What is the new department name?",
+            validate: (value) => {
+                if (value) {
+                    return true;
+                } else {
+                    console.log("Please enter department name.");
+                }
+            }
+        },
+    ]).then(answer => {
+        db.addDepartment(answer)
+        .then(()=>{
+            console.log(`New department ${answer.department} has been added!`.bgGreen);     
+            loadMainPrompts()
+        })  
+})
+}

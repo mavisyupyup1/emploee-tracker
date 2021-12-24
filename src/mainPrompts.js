@@ -5,7 +5,7 @@ module.exports=[
         message:'What would you like to do?'.green,
         choices: [
             {
-            name:'View all departments',
+            name:'View all departments'.blue,
             value:'VIEW_DEPARTMENT'
             },
             {
@@ -13,11 +13,11 @@ module.exports=[
                 value:'VIEW_ROLE'
             },
             {
-            name:'View all employee',
+            name:'View all employee'.yellow,
             value:'VIEW_EMPLOYEE'
             },
             {
-                name:'View utilized budget by department',
+                name:'View utilized budget by department'.red,
                 value:"VIEW_BUDGET_BY_DEPARTMENT"
             },
             {
@@ -25,23 +25,23 @@ module.exports=[
                 value:'VIEW_EMPLOYEE_BY_DEPARTMENT'
             },
             {
-                name:'View employees by role',
+                name:'View employees by role'.yellow,
                 value:'VIEW_EMPLOYEE_BY_ROLE'
             },
             {
-                name:'Add a department',
+                name:'Add a department'.blue,
                 value:'ADD_DEPARTMENT'
             },
             {
-                name:'Add a role',
+                name:'Add a role'.red,
                 value: 'ADD_ROLE'
             },
             {
-                name:'Add an employee',
+                name:'Add an employee'.rainbow,
                 value:'ADD_EMPLOYEE'
             },
             {
-                name:'Update an employee role',
+                name:'Update an employee role'.yellow,
                 value:'UPDATE_EMPLOYEE_ROLE'
             },
             {
@@ -49,15 +49,15 @@ module.exports=[
                 value:'UPDATE_EMPLOYEE_MANAGER'
             },
             {
-                name:'Delete a department',
+                name:'Delete a department'.cyan,
                 value:'DELETE_DEPARTMENT'
             },
             {
-                name:'Delete a role',
+                name:'Delete a role'.grey,
                 value:'DELETE_ROLE'
             },
             {
-                name:'Delete an employee',
+                name:'Delete an employee'.rainbow,
                 value:'DELETE_EMPLOYEE'
             },
 
