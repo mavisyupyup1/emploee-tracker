@@ -21,8 +21,9 @@ CREATE TABLE employee(
     FOREIGN KEY(role_id) REFERENCES role(id)  ON DELETE SET NULL ON UPDATE CASCADE
 );
 
-CREATE VIEW department_role AS SELECT name FROM department LEFT JOIN role ON department.id = role.department_id;
+CREATE VIEW employee_role AS SELECT first_name, last_name FROM employee LEFT JOIN role ON employee.role_id = role.id;
 
 CREATE VIEW department_salary AS SELECT title, salary, department_id FROM role LEFT JOIN department ON department.id = role.department_id;
+CREATE VIEW employee_department AS SELECT employee.first_name, employee.last_name, role.department_id FROM employee 
+JOIN role ON employee.role_id = role.id;
 
-CREATE VIEW employee_role AS SELECT first_name, last_name, role_id, manager_id FROM employee JOIN role ON employee.role_id = role.id;

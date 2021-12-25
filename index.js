@@ -13,7 +13,8 @@ figlet('Employee Tracker!', function(err, data) {
 const colors = require('colors');
 require('console.table')
 
-const mainPromptsQuestions = require('./src/mainPrompts')
+const mainPromptsQuestions = require('./src/mainPrompts');
+const { listenerCount } = require('./db/connection');
 
 
 //display welcome text and load main prompts
@@ -107,19 +108,61 @@ function viewEmployee(){
         loadMainPrompts()
     })
 }
+
 function viewEmployeeByDepartment(){
-    inquirer.prompt
-db.viewAllEmployeeByDepartment()
-.then(([rows])=>{
-    let employees = rows;
-    console.log('\n')
-    console.table(employees)
-})
-}
+    db.viewAllDepartment()
+    .then(([rows])=>{
+            let departments = rows;
+            const departmentChoices = departments.map(({id, name})=>({
+                name:name,
+                value:id
+            }));
+    inquirer.prompt([{
+        name:"department_id",
+        type:"list",
+        choices:departmentChoices,
+        message:"By which department?"
+    }])
+        .then(answer=>{
+            console.log(`Displaying all employee in the department.`.yellow);
+            db.viewEmployeeByDepartment(answer).then(([rows])=>{
+                let employees = rows;
+                console.log('\n')
+                console.table(employees)
+            })
+                
+        })
+
+    })
+};
 
 function viewEmployeeByRole(){
+    db.viewAllRole()
+    .then(([rows])=>{
+            let roles = rows;
+            const roleChoices = roles.map(({id, title})=>({
+                name:title,
+                value:id
+            }));
+    inquirer.prompt([{
+        name:"role",
+        type:"list",
+        choices:roleChoices,
+        message:"By which role?"
+    }])
+        .then(answer=>{
+            console.log(`Displaying all employee with that role.`.yellow);
+            db.viewEmployeeByRole(answer).then(([rows])=>{
+                let employees = rows;
+                console.log('\n')
+                console.table(employees)
+            })
+                
+        })
 
-}
+    })
+};
+
 // function to add a department
 function addDepartment(){
     inquirer.prompt([

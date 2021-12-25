@@ -23,15 +23,19 @@ class DB{
             `SELECT * FROM employee`
         )
     }
-    viewAllEmployeeRole (roleId){
+    viewEmployeeByRole (answer){
         return this.connection.promise().query(
             `SELECT * FROM employee WHERE role_id =?`,
-            roleId
+            answer.role  
         )
     };
-    viewEmployeeByRole(){
+    viewEmployeeByDepartment(answer){
+        return this.connection.promise().query(
+            `SELECT * FROM employee_department WHERE department_id =?`,
+            answer.department_id 
+        )
+    };
 
-    }
     addDepartment(answer){
         return this.connection.promise().query(
         "INSERT INTO department SET ?",
