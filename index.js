@@ -59,18 +59,6 @@ function loadMainPrompts(){
             case 'UPDATE_EMPLOYEE_ROLE':
                 updateEmployeeRole();
                 break;
-            case 'UPDATE_EMPLOYEE_MANAGER':
-                updateEmployeeManager();
-                break;
-            case 'DELETE_DEPARTMENT':
-                deleteDepartment();
-                break;
-            case 'DELETE_ROLE':
-                deleteROLE();
-                break;
-            case 'DELETE_EMPLOYEE':
-                deleteEmployee();
-                break;
             case 'QUIT':
                 db.end();
         }
@@ -132,6 +120,8 @@ function viewEmployeeByDepartment(){
             })
                 
         })
+        .then(()=>{
+            loadMainPrompts()})
 
     })
 };
@@ -156,12 +146,49 @@ function viewEmployeeByRole(){
                 let employees = rows;
                 console.log('\n')
                 console.table(employees)
-            })
-                
+            })      
         })
-
     })
+    .then(()=>{
+        loadMainPrompts()})
 };
+
+function updateEmployeeRole(){
+    db.viewAllEmployee()
+    .then(([rows])=>{
+            let employees = rows;
+            const employeeChoices = employees.map(({id, last_name})=>({
+                name:last_name,
+                value:id
+            }));
+            const roleChoices = employees.map(({role_id, id})=>({
+                name:role_id,
+                value:id
+            }));
+    inquirer.prompt([
+        {
+        name:"last_name",
+        type:"list",
+        choices: employeeChoices,
+        message:"Which employee would you like to update?"
+        },
+        {
+        name:"roles",
+        type:"list",
+        choices: roleChoices,
+        message:"what is the new role?"
+    }])
+    .then(answer=>{db.updateRole(answer)})
+.then(console.log(`Employee Role has been updated`))
+})
+
+.then(()=>{
+    loadMainPrompts()})
+
+}
+
+
+
 
 // function to add a department
 function addDepartment(){

@@ -35,7 +35,19 @@ class DB{
             answer.department_id 
         )
     };
-
+updateRole(answer){
+    return this.connection.promise().query(
+        "UPDATE employee SET ? WHERE ?",
+                [
+                    {
+                        role_id: answer.roles,
+                    },
+                    {
+                        last_name: answer.last_name,
+                    }
+                ]
+    )
+}
     addDepartment(answer){
         return this.connection.promise().query(
         "INSERT INTO department SET ?",

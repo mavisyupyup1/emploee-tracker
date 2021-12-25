@@ -44,23 +44,7 @@ module.exports=[
                 name:'Update an employee role'.yellow,
                 value:'UPDATE_EMPLOYEE_ROLE'
             },
-            {
-                name:'Update an employee manager',
-                value:'UPDATE_EMPLOYEE_MANAGER'
-            },
-            {
-                name:'Delete a department'.cyan,
-                value:'DELETE_DEPARTMENT'
-            },
-            {
-                name:'Delete a role'.grey,
-                value:'DELETE_ROLE'
-            },
-            {
-                name:'Delete an employee'.rainbow,
-                value:'DELETE_EMPLOYEE'
-            },
-
+            
             {
                 name:'Quit',
                 value:'QUIT'
