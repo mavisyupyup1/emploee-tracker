@@ -343,22 +343,45 @@ function deleteRole(){
 }
 
 function deleteEmployee(){
-    db.viewAnEmployee()
+    db.viewAllEmployee()
     .then(([rows])=>{
             let employees = rows;
-            const employeeChoices = employees.map(({id, title})=>({
+            const employeeChoices = employees.map(({id, last_name})=>({
                 name:last_name,
                 value:id
             }));
     inquirer.prompt([{
-        name:"role",
+        name:"last_name",
         type:"list",
-        choices:roleChoices,
-        message:"Which role do you want to delete?"
+        choices: employeeChoices,
+        message:"Which employee do you want to delete?"
     }])
         .then(answer=>{
-            console.log(`Deleting role.`.bgRed);
-            db.deleteARole(answer)
+            console.log(`Deleting employee.`.bgRed);
+            db.deleteAnEmployee(answer)
+                console.log('\n')
+                console.log('deleted')
+            })      .then(()=>{loadMainPrompts()})
+        })  
+}
+
+function deleteDepartment(){
+    db.viewAllDepartment()
+    .then(([rows])=>{
+            let departments = rows;
+            const departmentChoices = departments.map(({id, name})=>({
+                name:name,
+                value:id
+            }));
+    inquirer.prompt([{
+        name:"name",
+        type:"list",
+        choices: departmentChoices,
+        message:"Which employee do you want to delete?"
+    }])
+        .then(answer=>{
+            console.log(`Deleting department.`.bgRed);
+            db.deleteADepartment(answer)
                 console.log('\n')
                 console.log('deleted')
             })      .then(()=>{loadMainPrompts()})

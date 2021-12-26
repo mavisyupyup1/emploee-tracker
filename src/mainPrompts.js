@@ -52,7 +52,6 @@ module.exports=[
                 name:'Delete an employee'.rainbow,
                 value:'DELETE_EMPLOYEE'
             },
-
             {
                 name:'Quit',
                 value:'QUIT'

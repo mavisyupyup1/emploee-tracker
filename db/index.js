@@ -96,7 +96,12 @@ updateRole(answer){
             answer.last_name
         );
     }
-
+    deleteADepartment(answer){
+        return this.connection.promise().query(
+            `DELETE FROM department WHERE id =?`,
+            answer.name
+        );
+    }
     end(){
         this.connection.end()
     }
