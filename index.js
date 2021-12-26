@@ -59,6 +59,15 @@ function loadMainPrompts(){
             case 'UPDATE_EMPLOYEE_ROLE':
                 updateEmployeeRole();
                 break;
+            case 'DELETE_DEPARTMENT':
+                    deleteDepartment();
+                    break;
+            case 'DELETE_ROLE':
+                    deleteRole();
+                    break;
+            case 'DELETE_EMPLOYEE':
+                    deleteEmployee();
+                    break;
             case 'QUIT':
                 db.end();
         }
@@ -120,10 +129,9 @@ function viewEmployeeByDepartment(){
             })
                 
         })
-        .then(()=>{
-            loadMainPrompts()})
-
     })
+   
+        loadMainPrompts()
 };
 
 function viewEmployeeByRole(){
@@ -142,6 +150,7 @@ function viewEmployeeByRole(){
     }])
         .then(answer=>{
             console.log(`Displaying all employee with that role.`.yellow);
+            console.log(roleChoices)
             db.viewEmployeeByRole(answer).then(([rows])=>{
                 let employees = rows;
                 console.log('\n')
@@ -149,22 +158,22 @@ function viewEmployeeByRole(){
             })      
         })
     })
-    .then(()=>{
-        loadMainPrompts()})
+    
+    .then(()=>{loadMainPrompts()})
 };
 
 function updateEmployeeRole(){
-    db.viewAllEmployee()
-    .then(([rows])=>{
-            let employees = rows;
-            const employeeChoices = employees.map(({id, last_name})=>({
-                name:last_name,
-                value:id
-            }));
-            const roleChoices = employees.map(({role_id, id})=>({
-                name:role_id,
-                value:id
-            }));
+        db.viewAllEmployeeWithRole()
+        .then(([rows])=>{
+                let employees = rows;
+                const employeeChoices = employees.map(({id, last_name})=>({
+                    name:last_name,
+                    value:id
+                }));
+                const roleChoices=employees.map(({role_id,title})=>({
+                    name:title,
+                    value: role_id
+                }))
     inquirer.prompt([
         {
         name:"last_name",
@@ -173,18 +182,16 @@ function updateEmployeeRole(){
         message:"Which employee would you like to update?"
         },
         {
-        name:"roles",
+        name:"title",
         type:"list",
         choices: roleChoices,
         message:"what is the new role?"
     }])
-    .then(answer=>{db.updateRole(answer)})
-.then(console.log(`Employee Role has been updated`))
+    .then(answer=> {db.updateRole(answer.title,answer.last_name)
+    console.log(`Role updated!`.bgGreen);
+           loadMainPrompts();}
+    )
 })
-
-.then(()=>{
-    loadMainPrompts()})
-
 }
 
 
@@ -310,4 +317,50 @@ function addEmployee(){
            loadMainPrompts();
         });
     })
+}
+
+function deleteRole(){
+    db.viewAllRole()
+    .then(([rows])=>{
+            let roles = rows;
+            const roleChoices = roles.map(({id, title})=>({
+                name:title,
+                value:id
+            }));
+    inquirer.prompt([{
+        name:"role",
+        type:"list",
+        choices:roleChoices,
+        message:"Which role do you want to delete?"
+    }])
+        .then(answer=>{
+            console.log(`Deleting role.`.bgRed);
+            db.deleteARole(answer)
+                console.log('\n')
+                console.log('deleted')
+            })      .then(()=>{loadMainPrompts()})
+        })  
+}
+
+function deleteEmployee(){
+    db.viewAnEmployee()
+    .then(([rows])=>{
+            let employees = rows;
+            const employeeChoices = employees.map(({id, title})=>({
+                name:last_name,
+                value:id
+            }));
+    inquirer.prompt([{
+        name:"role",
+        type:"list",
+        choices:roleChoices,
+        message:"Which role do you want to delete?"
+    }])
+        .then(answer=>{
+            console.log(`Deleting role.`.bgRed);
+            db.deleteARole(answer)
+                console.log('\n')
+                console.log('deleted')
+            })      .then(()=>{loadMainPrompts()})
+        })  
 }

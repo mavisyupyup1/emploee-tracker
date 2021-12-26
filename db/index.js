@@ -23,6 +23,13 @@ class DB{
             `SELECT * FROM employee`
         )
     }
+
+    viewAllEmployeeWithRole(){
+        return this.connection.promise().query(
+            `SELECT * FROM employee_role`
+        )
+    }
+
     viewEmployeeByRole (answer){
         return this.connection.promise().query(
             `SELECT * FROM employee WHERE role_id =?`,
@@ -40,7 +47,7 @@ updateRole(answer){
         "UPDATE employee SET ? WHERE ?",
                 [
                     {
-                        role_id: answer.roles,
+                   role_id: answer.title,
                     },
                     {
                         last_name: answer.last_name,
@@ -76,6 +83,22 @@ updateRole(answer){
         }
        )
     }
+    deleteARole(answer){
+        return this.connection.promise().query(
+            `DELETE FROM role WHERE id =?`,
+            answer.role
+        );
+    }
 
+    deleteAnEmployee(answer){
+        return this.connection.promise().query(
+            `DELETE FROM employee WHERE id =?`,
+            answer.last_name
+        );
+    }
+
+    end(){
+        this.connection.end()
+    }
 }
 module.exports = new DB(connection);
