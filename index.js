@@ -127,11 +127,12 @@ function viewEmployeeByDepartment(){
                 console.log('\n')
                 console.table(employees)
             })
-                
+            .then(()=>{loadMainPrompts()})
         })
+       
     })
    
-        loadMainPrompts()
+        
 };
 
 function viewEmployeeByRole(){
@@ -150,16 +151,15 @@ function viewEmployeeByRole(){
     }])
         .then(answer=>{
             console.log(`Displaying all employee with that role.`.yellow);
-            console.log(roleChoices)
             db.viewEmployeeByRole(answer).then(([rows])=>{
                 let employees = rows;
                 console.log('\n')
                 console.table(employees)
-            })      
-        })
+            })       .then(()=>{loadMainPrompts()})
+        }) 
     })
     
-    .then(()=>{loadMainPrompts()})
+  
 };
 
 function updateEmployeeRole(){
@@ -189,8 +189,8 @@ function updateEmployeeRole(){
     }])
     .then(answer=> {db.updateRole(answer.title,answer.last_name)
     console.log(`Role updated!`.bgGreen);
-           loadMainPrompts();}
-    )
+    })
+    .then(()=>{loadMainPrompts()})
 })
 }
 
@@ -216,8 +216,7 @@ function addDepartment(){
         db.addDepartment(answer)
         .then(()=>{
             console.log(`New department ${answer.department} has been added!`.bgGreen);     
-            loadMainPrompts()
-        })  
+        })   .then(()=>{loadMainPrompts()})
 })
 }
 
@@ -264,8 +263,8 @@ function addRole(){
             
            db.addRole(answer)
            console.log(`New role ${answer.title} has been added!`);
-           loadMainPrompts();
-        });
+        
+        }) .then(()=>{loadMainPrompts()})
     })
 }
 
@@ -314,8 +313,8 @@ function addEmployee(){
             
            db.addEmployee(answer)
            console.log(`New role ${answer.first_name} has been added!`.bgGreen);
-           loadMainPrompts();
-        });
+          
+        }) .then(()=>{loadMainPrompts()})
     })
 }
 

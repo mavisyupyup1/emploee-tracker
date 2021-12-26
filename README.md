@@ -11,8 +11,10 @@ Employee Tracker is a content management systems (CMS) that allow business owner
 * use command ```npm start``` to invoke the application.
 * follow the command line to use the application
 
-# demo
-* live video
+# Demo
+![demo_video](assets/employee_tracker_demo.gif)
+
+* [live video](https://watch.screencastify.com/v/1dFdY6DaNZ2IEyPunogb/)
 * Github
 
 # built with
