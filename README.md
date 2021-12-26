@@ -21,12 +21,13 @@ Employee Tracker is a content management systems (CMS) that allow business owner
 * JavaScript
 * Node.js
 * MySQL
-* npm packages
-Inquirer
-Figlet
-mysql
-colors
-dotenv
+# npm packages
+- Inquirer
+- Figlet
+- mysql2
+- Express.js
+- colors
+- dotenv
 
 # License
 MIT License
