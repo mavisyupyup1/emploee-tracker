@@ -4,18 +4,18 @@ Employee Tracker is a content management systems (CMS) that allow business owner
 # Installation
 * Download or clone the repository
 * Node.js framework and mySQL is required to run the application
-* npm install to install the required npm packages
+* Use command ```npm install``` to install the required npm packages
 
 # Usage
-* run mySQL in shell and use command SOURCE db/db.sql SOURCE db/schema.sql and SOURCE db/seeds.sql to create database
-* use command ```npm start``` to invoke the application.
-* follow the command line to use the application
+* Run mySQL in shell and use command ```SOURCE db/db.sql; SOURCE db/schema.sql;SOURCE db/seeds.sql;``` to create database
+* Use command ```npm start``` to invoke the application.
+* Follow the command line to use the application
 
 # Demo
 ![demo_video](assets/employee_tracker_demo.gif)
 
-* [live video](https://watch.screencastify.com/v/1dFdY6DaNZ2IEyPunogb/)
-* Github
+* [live video](https://watch.screencastify.com/v/Z02XAF0XMJfJsIZr3kCp/)
+* [Github](https://github.com/mavisyupyup1/employee-tracker/)
 
 # built with
 * JavaScript
