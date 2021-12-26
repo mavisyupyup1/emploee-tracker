@@ -25,7 +25,6 @@ Employee Tracker is a content management systems (CMS) that allow business owner
 - Inquirer
 - Figlet
 - mysql2
-- Express.js
 - colors
 - dotenv
 
