@@ -23,15 +23,38 @@ class DB{
             `SELECT * FROM employee`
         )
     }
-    viewAllEmployeeRole (roleId){
+
+    viewAllEmployeeWithRole(){
+        return this.connection.promise().query(
+            `SELECT * FROM employee_role`
+        )
+    }
+
+    viewEmployeeByRole (answer){
         return this.connection.promise().query(
             `SELECT * FROM employee WHERE role_id =?`,
-            roleId
+            answer.role  
         )
     };
-    viewEmployeeByRole(){
-
-    }
+    viewEmployeeByDepartment(answer){
+        return this.connection.promise().query(
+            `SELECT * FROM employee_department WHERE department_id =?`,
+            answer.department_id 
+        )
+    };
+updateRole(answer){
+    return this.connection.promise().query(
+        "UPDATE employee SET ? WHERE ?",
+                [
+                    {
+                   role_id: answer.title,
+                    },
+                    {
+                        last_name: answer.last_name,
+                    }
+                ]
+    )
+}
     addDepartment(answer){
         return this.connection.promise().query(
         "INSERT INTO department SET ?",
@@ -60,6 +83,27 @@ class DB{
         }
        )
     }
+    deleteARole(answer){
+        return this.connection.promise().query(
+            `DELETE FROM role WHERE id =?`,
+            answer.role
+        );
+    }
 
+    deleteAnEmployee(answer){
+        return this.connection.promise().query(
+            `DELETE FROM employee WHERE id =?`,
+            answer.last_name
+        );
+    }
+    deleteADepartment(answer){
+        return this.connection.promise().query(
+            `DELETE FROM department WHERE id =?`,
+            answer.name
+        );
+    }
+    end(){
+        this.connection.end()
+    }
 }
 module.exports = new DB(connection);

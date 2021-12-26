@@ -13,7 +13,8 @@ figlet('Employee Tracker!', function(err, data) {
 const colors = require('colors');
 require('console.table')
 
-const mainPromptsQuestions = require('./src/mainPrompts')
+const mainPromptsQuestions = require('./src/mainPrompts');
+const { listenerCount } = require('./db/connection');
 
 
 //display welcome text and load main prompts
@@ -58,18 +59,15 @@ function loadMainPrompts(){
             case 'UPDATE_EMPLOYEE_ROLE':
                 updateEmployeeRole();
                 break;
-            case 'UPDATE_EMPLOYEE_MANAGER':
-                updateEmployeeManager();
-                break;
             case 'DELETE_DEPARTMENT':
-                deleteDepartment();
-                break;
+                    deleteDepartment();
+                    break;
             case 'DELETE_ROLE':
-                deleteROLE();
-                break;
+                    deleteRole();
+                    break;
             case 'DELETE_EMPLOYEE':
-                deleteEmployee();
-                break;
+                    deleteEmployee();
+                    break;
             case 'QUIT':
                 db.end();
         }
@@ -107,19 +105,98 @@ function viewEmployee(){
         loadMainPrompts()
     })
 }
+
 function viewEmployeeByDepartment(){
-    inquirer.prompt
-db.viewAllEmployeeByDepartment()
-.then(([rows])=>{
-    let employees = rows;
-    console.log('\n')
-    console.table(employees)
+    db.viewAllDepartment()
+    .then(([rows])=>{
+            let departments = rows;
+            const departmentChoices = departments.map(({id, name})=>({
+                name:name,
+                value:id
+            }));
+    inquirer.prompt([{
+        name:"department_id",
+        type:"list",
+        choices:departmentChoices,
+        message:"By which department?"
+    }])
+        .then(answer=>{
+            console.log(`Displaying all employee in the department.`.yellow);
+            db.viewEmployeeByDepartment(answer).then(([rows])=>{
+                let employees = rows;
+                console.log('\n')
+                console.table(employees)
+            })
+                
+        })
+    })
+   
+        loadMainPrompts()
+};
+
+function viewEmployeeByRole(){
+    db.viewAllRole()
+    .then(([rows])=>{
+            let roles = rows;
+            const roleChoices = roles.map(({id, title})=>({
+                name:title,
+                value:id
+            }));
+    inquirer.prompt([{
+        name:"role",
+        type:"list",
+        choices:roleChoices,
+        message:"By which role?"
+    }])
+        .then(answer=>{
+            console.log(`Displaying all employee with that role.`.yellow);
+            console.log(roleChoices)
+            db.viewEmployeeByRole(answer).then(([rows])=>{
+                let employees = rows;
+                console.log('\n')
+                console.table(employees)
+            })      
+        })
+    })
+    
+    .then(()=>{loadMainPrompts()})
+};
+
+function updateEmployeeRole(){
+        db.viewAllEmployeeWithRole()
+        .then(([rows])=>{
+                let employees = rows;
+                const employeeChoices = employees.map(({id, last_name})=>({
+                    name:last_name,
+                    value:id
+                }));
+                const roleChoices=employees.map(({role_id,title})=>({
+                    name:title,
+                    value: role_id
+                }))
+    inquirer.prompt([
+        {
+        name:"last_name",
+        type:"list",
+        choices: employeeChoices,
+        message:"Which employee would you like to update?"
+        },
+        {
+        name:"title",
+        type:"list",
+        choices: roleChoices,
+        message:"what is the new role?"
+    }])
+    .then(answer=> {db.updateRole(answer.title,answer.last_name)
+    console.log(`Role updated!`.bgGreen);
+           loadMainPrompts();}
+    )
 })
 }
 
-function viewEmployeeByRole(){
 
-}
+
+
 // function to add a department
 function addDepartment(){
     inquirer.prompt([
@@ -240,4 +317,73 @@ function addEmployee(){
            loadMainPrompts();
         });
     })
+}
+
+function deleteRole(){
+    db.viewAllRole()
+    .then(([rows])=>{
+            let roles = rows;
+            const roleChoices = roles.map(({id, title})=>({
+                name:title,
+                value:id
+            }));
+    inquirer.prompt([{
+        name:"role",
+        type:"list",
+        choices:roleChoices,
+        message:"Which role do you want to delete?"
+    }])
+        .then(answer=>{
+            console.log(`Deleting role.`.bgRed);
+            db.deleteARole(answer)
+                console.log('\n')
+                console.log('deleted')
+            })      .then(()=>{loadMainPrompts()})
+        })  
+}
+
+function deleteEmployee(){
+    db.viewAllEmployee()
+    .then(([rows])=>{
+            let employees = rows;
+            const employeeChoices = employees.map(({id, last_name})=>({
+                name:last_name,
+                value:id
+            }));
+    inquirer.prompt([{
+        name:"last_name",
+        type:"list",
+        choices: employeeChoices,
+        message:"Which employee do you want to delete?"
+    }])
+        .then(answer=>{
+            console.log(`Deleting employee.`.bgRed);
+            db.deleteAnEmployee(answer)
+                console.log('\n')
+                console.log('deleted')
+            })      .then(()=>{loadMainPrompts()})
+        })  
+}
+
+function deleteDepartment(){
+    db.viewAllDepartment()
+    .then(([rows])=>{
+            let departments = rows;
+            const departmentChoices = departments.map(({id, name})=>({
+                name:name,
+                value:id
+            }));
+    inquirer.prompt([{
+        name:"name",
+        type:"list",
+        choices: departmentChoices,
+        message:"Which employee do you want to delete?"
+    }])
+        .then(answer=>{
+            console.log(`Deleting department.`.bgRed);
+            db.deleteADepartment(answer)
+                console.log('\n')
+                console.log('deleted')
+            })      .then(()=>{loadMainPrompts()})
+        })  
 }
